@@ -35,8 +35,9 @@ $f3->route('GET /order', function($f3) {
 });
 
 //define an order 2  route
-$f3->route('POST /order2', function () {
+$f3->route('POST /order2', function ($f3) {
 
+    $f3->set('condiments', getCondiments());
     var_dump($_POST);
     if(isset($_POST['food'])) {
         $_SESSION['food'] = $_POST['food'];
