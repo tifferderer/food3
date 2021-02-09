@@ -1,0 +1,11 @@
+{
+  "name": "tferdere/SDEV328/food3",
+  "authors": [
+    {
+      "name": "Tiffany Ferderer",
+      "email": "tferderer@mail.greenriver.edu"}
+  ],
+  "require": {
+    "bcosca/fatfree-core": "dev-master"
+  }
+}
