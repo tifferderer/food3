@@ -72,13 +72,25 @@ $f3->route('GET|POST /order', function($f3) {
 $f3->route('GET|POST /order2', function ($f3) {
 
     if($_SERVER['REQUEST_METHOD']=='POST') {
+        //if condiments selected
         if(isset($_POST['conds'])) {
+
+            //get from post array
             $userCondiments = $_POST['conds'];
-            $_SESSION['conds'] = implode(" ", $userCondiments);
+
+            if(validCondiments($userCondiments)) {
+                $_SESSION['conds'] = implode(" ", $userCondiments);
+            }
+
+            else {
+                $f3->set('errors["condiment"]', "Valid condiments only.");
+            }
+    }
+        if (empty($f3->get('errors'))) {
+            //send to the summary page
+            $f3->reroute('/summary');
         }
 
-        //send to the summary page
-        $f3->reroute('/summary');
     }
     //if form beem submitted
     $f3->set('condiments', getCondiments());
