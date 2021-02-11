@@ -4,14 +4,15 @@
 <div class="container">
     <h1>Order Here:</h1>
 
-    <form action="order2" method="post">
+    <form action="#" method="post">
 
         <!-- get food -->
         <div class="form-group">
             <label for="food" class="col-sm-2 control-label">What food would you like to order?</label>
 
             <div class="col-sm-4">
-                <input class="form-control" type="text" name="food" id="food" >
+                <input class="form-control" type="text" name="food" id="food" value="{{ @userFood }}">
+                <check if="{{ isset(@errors['food']) }}"> {{ @errors['food'] }}</check>
             </div>
         </div>
 
@@ -19,21 +20,13 @@
         <div class="form-group">
             <label class="col-sm-2 control-label">Select a meal</label>
             <div class="col-sm-4">
-                <label><input type="radio"
-                              name="meal"
-                              id="breakfast"
-                              value="breakfast"> Breakfast
-                    </input></label><br>
-                <label><input type="radio"
-                              name="meal"
-                              id="lunch"
-                              value="lunch"> Lunch
-                    </input></label><br>
-                <label><input type="radio"
-                              name="meal"
-                              id="dinner"
-                              value="dinner"> Dinner
-                    </input></label><br>
+                <repeat group="{{ @meals }}" value="{{ @meal }}">
+                    <label><input type="radio"
+                                  name="meal"
+                                  id="{{ @meal }}"
+                                  value="{{ @meal }}"> {{ ucfirst(@meal) }}
+                        </input></label><br>
+                </repeat>
             </div>
         </div>
 
