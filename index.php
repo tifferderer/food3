@@ -12,11 +12,12 @@ session_start();
 
 //require the autoload file
 require_once('vendor/autoload.php');
-require_once ('model/data-layer.php');
+
 
 //Create an instance of Base class
 $f3 = Base::instance();
 $validator = new Validate();
+$dataLayer = new DataLayer();
 
 $f3->set('DEBUG', 3);
 
@@ -32,6 +33,7 @@ $f3->route('GET|POST /order', function($f3) {
 
     //there are 2 ways to let the function know that validator is global
     global $validator;
+    global $dataLayer;
 
     //if the form has been submitted
     if($_SERVER['REQUEST_METHOD']=='POST') {
@@ -64,7 +66,7 @@ $f3->route('GET|POST /order', function($f3) {
         }
     }
 
-    $f3->set('meals', getMeals());
+    $f3->set('meals', $dataLayer->getMeals());
     $f3->set('userFood', isset($userFood) ? $userFood : "");
     $f3->set('userMeal', isset($userMeal) ? $userMeal : "");
 
@@ -76,6 +78,7 @@ $f3->route('GET|POST /order', function($f3) {
 $f3->route('GET|POST /order2', function ($f3) {
 
     global $validator;
+    global $dataLayer;
 
     if($_SERVER['REQUEST_METHOD']=='POST') {
         //if condiments selected
@@ -99,7 +102,7 @@ $f3->route('GET|POST /order2', function ($f3) {
 
     }
     //if form beem submitted
-    $f3->set('condiments', getCondiments());
+    $f3->set('condiments', $dataLayer->getCondiments());
 
     $view = new Template();
     echo $view->render('views/order2.html');

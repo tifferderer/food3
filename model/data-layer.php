@@ -1,16 +1,23 @@
 <?php
 
-/* model/data-layer.php
+/* model/validate.php
 *returns data for my app
  *
 */
 
-function getMeals() {
+class DataLayer
+{
+    /** geteMeals() returns an array of meals
+     * @return string[] array
+     */
+    function getMeals()
+    {
 
-    return array("breakfast","brunch", "lunch", "dinner");
+        return array("breakfast", "brunch", "lunch", "dinner");
+    }
+
+    function getCondiments()
+    {
+        return array("mayo", "mustard", "sriracha", "ketchup", "relish");
+    }
 }
-
-function getCondiments() {
-    return array("mayo", "mustard", "sriracha", "ketchup", "relish");
-}
-
