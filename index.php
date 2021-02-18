@@ -13,10 +13,11 @@ session_start();
 //require the autoload file
 require_once('vendor/autoload.php');
 require_once ('model/data-layer.php');
-require_once ('model/validate.php');
 
 //Create an instance of Base class
 $f3 = Base::instance();
+$validator = new Validate();
+
 $f3->set('DEBUG', 3);
 
 //define a default route(home page)
@@ -29,6 +30,9 @@ $f3->route('GET /', function() {
 //define an order route
 $f3->route('GET|POST /order', function($f3) {
 
+    //there are 2 ways to let the function know that validator is global
+    global $validator;
+
     //if the form has been submitted
     if($_SERVER['REQUEST_METHOD']=='POST') {
 
@@ -37,7 +41,7 @@ $f3->route('GET|POST /order', function($f3) {
         $userMeal = ($_POST['meal']);
 
         //if data is valid, store in session
-        if(validFood($userFood)) {
+        if($GLOBALS['validator']->validFood($userFood)) { //this is the second way
             $_SESSION['food'] = $userFood;
         }
         //data is not valid, set error in f3 hive
@@ -46,7 +50,7 @@ $f3->route('GET|POST /order', function($f3) {
         }
 
         //
-        if(validMeals($userMeal)) {
+        if($validator->validMeals($userMeal)) {
             $_SESSION['meal'] = $userMeal;
         }
         //data is not valid, set error in f3 hive
@@ -71,6 +75,8 @@ $f3->route('GET|POST /order', function($f3) {
 //define an order 2  route
 $f3->route('GET|POST /order2', function ($f3) {
 
+    global $validator;
+
     if($_SERVER['REQUEST_METHOD']=='POST') {
         //if condiments selected
         if(isset($_POST['conds'])) {
@@ -78,7 +84,7 @@ $f3->route('GET|POST /order2', function ($f3) {
             //get from post array
             $userCondiments = $_POST['conds'];
 
-            if(validCondiments($userCondiments)) {
+            if($validator->validCondiments($userCondiments)) {
                 $_SESSION['conds'] = implode(" ", $userCondiments);
             }
 
