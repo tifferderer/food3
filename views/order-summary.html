@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Order Summary</title>
+</head>
+<body>
+
+<repeat group="{{ @orders }}" value="{{ @order}}">
+    <h2>Order ID: {{ @order['order_id'] }}</h2>
+    <p>{{ @order['food'] }}</p>
+    <p>{{ @order['meal'] }}</p>
+    <p>{{ @order['condiments'] }}</p>
+    <p>{{ @order['date('M d, Y h:ma', strtotime(@order['order_date'] }}</p>
+</repeat>
+
+</body>
+</html>

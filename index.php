@@ -9,16 +9,17 @@ error_reporting(E_ALL);
 
 //require the autoload file
 require_once('vendor/autoload.php');
+require $_SERVER['DOCUMENT_ROOT'].'/../config.php'; //access to the database
 
 //AUTOLOAD BEFORE SESSION START ALWAYS
-
 //Start a session
 session_start();
 
+
 //Create an instance of Base class
 $f3 = Base::instance();
-$validator = new Validate();
-$dataLayer = new DataLayer();
+$dataLayer = new DataLayer($dbh);
+$validator = new Validate($dataLayer);
 $order = new Order();
 $controller = new Controller($f3);
 
@@ -50,6 +51,13 @@ $f3->route('GET /summary', function () {
 
     global $controller;
     $controller->summary();
+});
+
+//define a order summary  route
+$f3->route('GET /order-summary', function () {
+
+    global $controller;
+    $controller->orderSummary();
 });
 
 //run fat free
